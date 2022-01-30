@@ -72,3 +72,19 @@ resource "aws_security_group" "dev_sg" {
     Name = "dev_sg"
   }
 }
+
+
+resource "aws_instance" "dev_node" {
+  instance_type = "t2.micro"
+  ami           = data.aws_ami.server_ami.id
+
+  key_name               = "MigTest"
+  vpc_security_group_ids = [aws_security_group.dev_sg.id]
+  subnet_id              = aws_subnet.dev_public_subnet.id
+  user_data = file("userdata.tpl")
+
+  tags = {
+    Name = "dev-node"
+  }
+}
+
