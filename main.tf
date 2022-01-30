@@ -47,3 +47,28 @@ resource "aws_route_table_association" "dev_public_assoc" {
   subnet_id      = aws_subnet.dev_public_subnet.id
   route_table_id = aws_route_table.dev_public_rt.id
 }
+
+resource "aws_security_group" "dev_sg" {
+  name        = "dev_sg"
+  description = "Allow all from anywhere"
+  vpc_id      = aws_vpc.main_dev_vpc.id
+
+  ingress {
+    description = "TLS from VPC"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "dev_sg"
+  }
+}
