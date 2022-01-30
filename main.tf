@@ -81,7 +81,7 @@ resource "aws_instance" "dev_node" {
   key_name               = "MigTest"
   vpc_security_group_ids = [aws_security_group.dev_sg.id]
   subnet_id              = aws_subnet.dev_public_subnet.id
-  user_data = file("userdata.tpl")
+  user_data              = file("userdata.tpl")
 
   tags = {
     Name = "dev-node"
